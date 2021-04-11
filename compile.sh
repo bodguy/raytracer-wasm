@@ -1,0 +1,1 @@
+em++ -std=c++17 -O3 src/main.cpp src/Color.cpp src/Ray.cpp src/Vec3.cpp -s WASM=1 -o build/raytracer.html
