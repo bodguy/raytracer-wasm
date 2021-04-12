@@ -3,7 +3,6 @@
 class Vec3 {
 public:
   Vec3() = default;
-  ~Vec3() = default;
   explicit Vec3(float _x);
   Vec3(float _x, float _y);
   Vec3(float _x, float _y, float _z);
@@ -53,7 +52,7 @@ public:
   static Vec3 inverse(const Vec3& v);
 
   float x{0.0}, y{0.0}, z{0.0};
-  static const Vec3 up, down, left, right;
+  static const Vec3 up, down, left, right, forward, backward, zero;
 
 private:
   static void swap(Vec3 &first, Vec3 &second);

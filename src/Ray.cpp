@@ -1,8 +1,8 @@
 #include "Ray.h"
 #include "Math.h"
 
-Ray::Ray(const Vec3 &origin, const Vec3 &direction)
-    : mOrigin{origin}, mDirection{direction}, mInvDirection{Vec3::inverse(direction)} {}
+Ray::Ray(const Vec3 &ori, const Vec3 &dir)
+    : origin{ori}, direction{dir} {}
 
 Ray::Ray(Ray &&other) : Ray{} { Ray::swap(*this, other); }
 
@@ -12,10 +12,10 @@ Ray &Ray::operator=(Ray other) {
   return *this;
 }
 
-Vec3 Ray::point(float distance) { return mOrigin + mDirection * distance; }
+Vec3 Ray::point(float distance) { return origin + direction * distance; }
 
 bool Ray::operator==(const Ray &other) {
-  return ((mOrigin == other.mOrigin) && (mDirection == other.mDirection));
+  return ((origin == other.origin) && (direction == other.direction));
 }
 
 bool Ray::operator!=(const Ray &other) { return !(*this == other); }
@@ -23,7 +23,6 @@ bool Ray::operator!=(const Ray &other) { return !(*this == other); }
 void Ray::swap(Ray &first, Ray &second) {
   using std::swap;
 
-  swap(first.mOrigin, second.mOrigin);
-  swap(first.mDirection, second.mDirection);
-  swap(first.mInvDirection, second.mInvDirection);
+  swap(first.origin, second.origin);
+  swap(first.direction, second.direction);
 }

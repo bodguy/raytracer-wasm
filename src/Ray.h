@@ -5,8 +5,7 @@
 class Ray {
 public:
   Ray() = default;
-  ~Ray() = default;
-  Ray(const Vec3 &origin, const Vec3 &direction);
+  Ray(const Vec3 &ori, const Vec3 &dir);
   Ray(const Ray &other) = default;
   Ray(Ray &&other);
   Ray &operator=(Ray other);
@@ -15,9 +14,8 @@ public:
   bool operator==(const Ray &other);
   bool operator!=(const Ray &other);
 
-  Vec3 mOrigin;
-  Vec3 mDirection{1, 0, 0};
-  Vec3 mInvDirection{Vec3::inverse(mDirection)};
+  Vec3 origin;
+  Vec3 direction{1, 0, 0};
 
 private:
   void swap(Ray &first, Ray &second);
