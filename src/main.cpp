@@ -3,12 +3,41 @@
 #include "Plane.h"
 #include "Ray.h"
 #include "Sphere.h"
+#include <algorithm>
 #include <vector>
 
 const unsigned int width = 640;
 const unsigned int height = 480;
 constexpr float aspectRatio = (float)width / (float)height;
 unsigned int frameBuffer[width * height];
+
+int winningObjectIndex(const std::vector<float> &intersections) {
+  if (intersections.empty()) {
+    return -1;
+  }
+
+  if (intersections.size() == 1) {
+    if (intersections[0] > 0) {
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+
+  // find maximum value
+  float max = *std::max_element(std::begin(intersections), std::end(intersections));
+  // then start from the max value find min positive value
+  if (max > 0) {
+    auto pos = std::min_element(std::begin(intersections), std::end(intersections),
+                                [](const float t1, const float t2) {
+                                  return t1 > 0 && (t2 <= 0 || t1 < t2);
+                                });
+    return std::distance(std::begin(intersections), pos);
+  }
+
+  // all the intersections were negative
+  return -1;
+}
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,7 +58,7 @@ void render() {
   Sphere sceneSphere{Vec3::zero, 1, Color::green};
   Plane scenePlane{Vec3::up, -1, Color::purple};
 
-  std::vector<Object*> sceneObjects;
+  std::vector<Object *> sceneObjects;
   sceneObjects.emplace_back(&sceneSphere);
   sceneObjects.emplace_back(&scenePlane);
 
@@ -53,19 +82,24 @@ void render() {
       }
 
       Vec3 camRayOrigin = cam.position;
-      Vec3 camRayDirection = (camDir + (camRight * (xAmount - 0.5) + (camDown * (yAmount - 0.5)))).makeNormalize();
+      Vec3 camRayDirection =
+          (camDir + (camRight * (xAmount - 0.5) + (camDown * (yAmount - 0.5))))
+              .makeNormalize();
       Ray camRay{camRayOrigin, camRayDirection};
       std::vector<float> intersections;
 
-      for (auto* object : sceneObjects) {
-          intersections.emplace_back(object->findIntersection(camRay));
+      for (auto *object : sceneObjects) {
+        intersections.emplace_back(object->findIntersection(camRay));
       }
 
-      if ((x > 200 && x < 440) && (y > 200 && y < 480)) {
-        frameBuffer[pixelPosition] = 0xff17de0a;
-      } else {
-        frameBuffer[pixelPosition] = 0xff000000;
-      }
+      int winningIndex = winningObjectIndex(intersections);
+      printf("%d", winningIndex);
+
+    //   if ((x > 200 && x < 440) && (y > 200 && y < 480)) {
+    //     frameBuffer[pixelPosition] = 0xff17de0a;
+    //   } else {
+    //     frameBuffer[pixelPosition] = 0xff000000;
+    //   }
     }
   }
 }
@@ -73,3 +107,7 @@ void render() {
 #ifdef __cplusplus
 }
 #endif
+
+int main() {
+    render();
+}
