@@ -96,11 +96,12 @@ void render() {
       int winningIndex = winningObjectIndex(intersections);
       printf("%d", winningIndex);
 
-    //   if ((x > 200 && x < 440) && (y > 200 && y < 480)) {
-    //     frameBuffer[pixelPosition] = 0xff17de0a;
-    //   } else {
-    //     frameBuffer[pixelPosition] = 0xff000000;
-    //   }
+      if (winningIndex == -1) {
+        frameBuffer[pixelPosition] = 0x00000000;
+      } else {
+        Color objectColor = sceneObjects[winningIndex]->color;
+        frameBuffer[pixelPosition] = 0xff000000;
+      }
     }
   }
 }
