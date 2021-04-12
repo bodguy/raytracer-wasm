@@ -50,6 +50,8 @@ public:
   static float dot(const Vec3 &a, const Vec3 &b);
   static Vec3 normalize(const Vec3 &v);
   static Vec3 inverse(const Vec3& v);
+  static Vec3 negate(const Vec3& v);
+  static Vec3 pow(const Vec3& v, float exp);
 
   float x{0.0}, y{0.0}, z{0.0};
   static const Vec3 up, down, left, right, forward, backward, zero;

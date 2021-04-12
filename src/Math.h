@@ -19,6 +19,7 @@ public:
   static float floor(float a) { return std::floor(a); }
   static float sqrt(float a) { return std::sqrt(a); }
   static float abs(float a) { return std::abs(a); }
+  static float pow(float a, float exp) { return std::pow(a, exp); }
 
   static constexpr float pi = float(3.14159265358979); // std::atan(1) * 4
   static constexpr int degrees = 360;

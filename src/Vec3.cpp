@@ -149,6 +149,14 @@ Vec3 Vec3::inverse(const Vec3 &v) {
   return {float(1.0) / v.x, float(1.0) / v.y, float(1.0) / v.z};
 }
 
+Vec3 Vec3::negate(const Vec3& v) {
+  return Vec3{-v.x, -v.y, -v.z};
+}
+
+Vec3 Vec3::pow(const Vec3& v, float exp) { 
+  return Vec3{Math::pow(v.x, exp), Math::pow(v.y, exp), Math::pow(v.z, exp)};
+}
+
 void Vec3::swap(Vec3 &first, Vec3 &second) {
   using std::swap;
 

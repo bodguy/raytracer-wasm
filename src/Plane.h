@@ -16,7 +16,7 @@ public:
 
         float a = Vec3::dot(rayDir, normal);
         if (a == 0) {
-            // parallel
+            // ray and the plane are parallel
             return -1;
         }
 
