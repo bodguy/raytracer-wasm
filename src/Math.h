@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Vec3.h"
-#include <cmath>
 #include <utility>
+#include <limits>
+#include <cmath>
 
 class Math {
 public:

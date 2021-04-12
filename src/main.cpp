@@ -46,7 +46,8 @@ extern "C" {
 void render() {
   Vec3 camPos{3, 1.5, -4};
   Vec3 lookAt{0, 0, 0};
-  Vec3 camDir = Vec3{camPos - lookAt}.makeNegate().makeNormalize();
+  Vec3 diff = camPos - lookAt;
+  Vec3 camDir = Vec3::normalize(Vec3::negate(diff));
   Vec3 camRight = Vec3::cross(Vec3::up, camDir).makeNormalize();
   Vec3 camDown = Vec3::cross(camRight, camDir);
 
